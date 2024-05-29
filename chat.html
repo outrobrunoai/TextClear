@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TextClear</title>
+  <link rel="icon" type="image/ico" href="img/favicon.ico">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  
+  <header>
+    <a href="index.html" class="logo-link">
+      <img src="img/favicon.ico" alt="Logo" class="logo">
+    </a>
+    <div class="conteudo-header">
+      <h1>TextClear</h1>
+      <p>Realize correções no seu texto utilizando inteligência artificial.</p>
+    </div>
+  </header>
+
+  <main>
+    <div class="texto-container">
+      <div class="chat-container">
+        <div type="text" class="chat-box" id="chat-box" placeholder="A correção aparecerá aqui..."></div>
+        <div type="text" class="chat-box" id="chat-box2" placeholder="A correção aparecerá aqui..."></div>
+      </div>
+      <input type="text" class="texto" id="texto" placeholder="Digite algo...">
+      <button type="button" class="btn" id="btn">Submeter</button>
+    </div>
+  </main>
+
+  <footer>
+    <div class="barra-cinza"></div>
+    <p id="termsOfService" class="cursor-mouse">Termos de Serviço</p>
+  </footer>
+
+  <div id="termosModal" class="modal">
+    <div class="modal-conteudo">
+      <span class="fechar">&times;</span>
+      <p class="modal-texto"> O presente Termo estabelece obrigações contratadas de livre e espontânea vontade, por tempo indeterminado, entre a plataforma e as pessoas físicas ou jurídicas, usuárias do OU site OU aplicativo.<br>
+        Ao utilizar a plataforma o usuário aceita integralmente as presentes normas e compromete-se a observá-las, sob o risco de aplicação das penalidade cabíveis.<br>    
+        A aceitação do presente instrumento é imprescindível para o acesso e para a utilização de quaisquer serviços fornecidos pela empresa. Caso não concorde com as disposições deste instrumento, o usuário não deve utilizá-los.
+      </p>
+    </div>
+  </div>
+
+
+  <script>
+    //Transforma o input do usuário em json e envia para o servidor que a API está.
+    let respostaDoServidor = '';
+    document.getElementById("btn").addEventListener("click", function() {
+      const valor = document.getElementById("texto").value;
+      if (valor !== "") {
+        fetch('/enviar-json', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ valor: valor })
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          respostaDoServidor = data;
+          sendMessage();
+        })
+        .catch(error => {
+          console.error('Erro:', error);
+        });
+      }
+    });
+
+    //Função de envio da mensagem para os chatbox.
+
+    function sendMessage() {
+      limparChatBoxes();
+      var userInput = document.getElementById("texto");
+      var message = userInput.value.trim();
+      if (message !== "") {
+        appendMessage("Usuário", message, "chat-box");
+        setTimeout(function() {
+          appendMessage("Chatbox", respostaDoServidor.resposta, "chat-box2");
+        }, 500);
+        userInput.value = "";
+      }
+    }
+
+    //Função para limpar as caixas de texto.
+    function limparChatBoxes() {
+      document.getElementById("chat-box").innerHTML = "";
+      document.getElementById("chat-box2").innerHTML = "";
+    }
+
+    //adiciona a mensagem na caixa de texto de resposta.
+
+    function appendMessage(sender, message, chatBoxId) {
+      var chatBox = document.getElementById(chatBoxId);
+      var messageElement = document.createElement("div");
+      messageElement.innerHTML = "<strong>" + sender + ":</strong> " + message;
+      chatBox.appendChild(messageElement);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+
+// caso o usuário pressione enter, enviar o texto para a API.
+    document.getElementById("texto").addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        document.getElementById("btn").click();
+      }
+    });
+
+    // atribuindo o modal
+    var modal = document.getElementById("termsModal");
+
+    // atribuindo o elemento que abre o modal
+    var btn = document.getElementById("termsOfService");
+
+    // atribuindo o elemento <span> que fecha o modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // quando o usuário clicar no elemento que abre o modal, abra o modal
+    btn.onclick = function() {
+      modal.style.display = "block";
+    }
+
+    // quando o usuário clicar no <span> (x), feche o modal
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    // quando o usuário clicar na parte de fora do modal, feche-o
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+  </script>
+</body>
+</html>

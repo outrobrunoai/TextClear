@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TextClear - Correção de Texto</title>
+   
+</head>
+<body>
+
+    <header>
+        <img src="img/favicon.ico" alt="" class="logo">      
+        <div class="header-text">
+            <h1 class="superior">TextClear</h1>
+            <p>Correção de texto usando Inteligência Artificial</p>
+        </div>
+    </header>
+
+    
+    <div class="container">
+        <div class="titulo"><h2>Bem-vindo ao TextClear</h2></div>    
+        <p>O TextClear é uma ferramenta de correção e resumos de texto com sua estrutura baseada em IA, de acesso gratuito. Ela pode auxiliá-lo a produzir textos em português, evitando os erros comuns da linguagem.</p>
+        <p>Selecione uma das opções abaixo, dependendo do que você precisa.</p>
+        <div class="button-container">
+            <a href="chat.html" class="botao">Correções</a>
+            <a href="resumo.html" class="botao2">Resumos</a>
+        </div>
+    </div>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #c9c9e7;
+        }
+        header {
+            background-color: #333;
+            color: #ffffff; 
+            padding: 40px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            flex-direction: row;
+        }
+        header .logo {
+            height: 50px;
+            width: 50px;
+        }
+        header p {
+            margin: 0;
+            color: #cccccc;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+        .container {
+            max-width: 800px;
+            padding: 20px;
+            margin: 70px auto;
+        }
+        p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-top: 10px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px; 
+            margin-top: 20px;
+        }
+        .botao, .botao2 {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+        }
+        .botao:hover, .botao2:hover {
+            background-color: #71767e;
+            transform: scale(1.05);
+        }
+        .titulo {
+            text-align: center;
+            font-size: large;
+        } 
+        .header-text {
+            margin-left: 20px;
+            display: flex;
+         flex-direction: column;
+        }    
+    </style>
+    
+</body>
+</html>
